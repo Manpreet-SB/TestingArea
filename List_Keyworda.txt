@@ -1,0 +1,234 @@
+Sure! Here are some additional lists of keywords related to incidents, workplace safety, hazards, and investigation specifics. Each list is targeted to capture different dimensions of incident analysis, such as incident location, affected personnel, time factors, and investigation findings.
+
+
+---
+
+11. Incident Location Keywords
+
+incident_location_keywords = [
+    'warehouse', 'loading dock', 'storage room', 'production floor', 'office area', 'parking lot', 'workstation', 
+    'laboratory', 'manufacturing line', 'assembly line', 'construction site', 'shipping area', 'boiler room', 
+    'chemical storage', 'loading bay', 'maintenance area', 'data center', 'break room', 'stairwell', 'elevator', 
+    'corridor', 'machinery area', 'electrical room', 'outdoor worksite', 'confined space', 'HVAC room', 
+    'control room', 'basement', 'garage', 'rooftop'
+]
+
+12. Affected Personnel Keywords
+
+affected_personnel_keywords = [
+    'employee', 'contractor', 'maintenance staff', 'supervisor', 'operator', 'inspector', 'cleaning crew', 
+    'manager', 'forklift operator', 'technician', 'engineer', 'construction worker', 'electrician', 'welder', 
+    'machinist', 'lab technician', 'delivery driver', 'security guard', 'first responder', 'firefighter', 
+    'paramedic', 'safety officer', 'visitor', 'inspector', 'administrator', 'line worker', 'shift supervisor', 
+    'vendor', 'client'
+]
+
+13. Time and Shift Keywords
+
+time_shift_keywords = [
+    'morning shift', 'night shift', 'afternoon shift', 'day shift', 'graveyard shift', 'holiday shift', 'overtime', 
+    'off-peak hours', 'rush hour', 'mid-shift', 'end of shift', 'weekend shift', 'late shift', 'early shift', 
+    'peak time', 'downtime', 'scheduled maintenance', 'unscheduled', 'peak season', 'off-season', 'rainy season', 
+    'winter', 'summer', 'peak load', 'shift change', 'break time', 'lunch hour', 'start of shift', 'end of day'
+]
+
+14. Investigation Findings Keywords
+
+investigation_findings_keywords = [
+    'root cause', 'contributory factor', 'corrective action', 'preventive measure', 'recommendation', 'lessons learned', 
+    'policy violation', 'procedure breach', 'unsafe condition', 'negligence', 'defective equipment', 'improper training', 
+    'poor supervision', 'inadequate resources', 'risk tolerance', 'preventive maintenance', 'human error', 'design flaw', 
+    'safety hazard', 'non-compliance', 'policy breach', 'management oversight', 'technical failure', 'behavioral issue', 
+    'communication breakdown', 'incident root cause', 'contributing factor', 'incorrect procedure'
+]
+
+15. Risk and Severity Level Keywords
+
+risk_severity_keywords = [
+    'high risk', 'moderate risk', 'low risk', 'critical', 'severe', 'catastrophic', 'minor', 'moderate', 
+    'fatal', 'disabling', 'near-miss', 'first aid required', 'reportable incident', 'recordable incident', 
+    'potential hazard', 'life-threatening', 'permanent injury', 'temporary injury', 'lost workdays', 
+    'restricted duty', 'hospitalization', 'medical treatment', 'property damage severity', 'injury severity', 
+    'exposure severity', 'financial loss', 'environmental impact severity', 'public safety impact', 'occupational hazard'
+]
+
+16. Environment and Weather Conditions Keywords
+
+environment_weather_keywords = [
+    'rain', 'snow', 'fog', 'wind', 'thunderstorm', 'lightning', 'hail', 'frost', 'icy', 'high humidity', 'heat wave', 
+    'cold wave', 'sun glare', 'overcast', 'darkness', 'low visibility', 'mud', 'slippery', 'puddles', 'drizzle', 
+    'dew', 'hot weather', 'cold weather', 'temperature fluctuations', 'seasonal weather', 'extreme temperature', 
+    'storm warning', 'flooding', 'wildfire', 'natural disaster', 'air quality', 'pollution', 'contamination', 
+    'wildlife hazard'
+]
+
+17. Compliance Violation Keywords
+
+compliance_violation_keywords = [
+    'OSHA violation', 'code violation', 'non-compliance', 'regulatory breach', 'legal infraction', 'policy infraction', 
+    'standards breach', 'safety breach', 'environmental violation', 'penalty', 'fine', 'compliance lapse', 
+    'inspection failure', 'code of conduct', 'standard operating procedure', 'hazard communication', 'safety protocol', 
+    'permit violation', 'unauthorized access', 'improper storage', 'hazardous materials handling', 'improper disposal', 
+    'emergency response failure', 'unreported incident', 'data breach', 'safety code breach', 'investigation finding'
+]
+
+18. Behavioral Safety Keywords
+
+behavioral_safety_keywords = [
+    'unsafe behavior', 'risk-taking', 'non-compliance', 'distraction', 'carelessness', 'rushing', 'failure to follow rules', 
+    'improper lifting', 'lack of awareness', 'lack of concentration', 'disregard for safety', 'unauthorized operation', 
+    'horseplay', 'peer pressure', 'overconfidence', 'recklessness', 'lack of supervision', 'fatigue', 'stress', 
+    'inattention', 'behavioral safety observation', 'habitual behavior', 'safety culture', 'training need', 'awareness program', 
+    'workplace behavior', 'behavior-based safety', 'negligence', 'communication gap', 'overreliance on experience'
+]
+
+19. Near-Miss Keywords
+
+near_miss_keywords = [
+    'close call', 'narrow escape', 'potential incident', 'unreported incident', 'potential hazard', 'risk identified', 
+    'warning sign', 'incident prevented', 'hazard averted', 'missed injury', 'unintentional safety', 'near accident', 
+    'warning near miss', 'risk assessment', 'intervention', 'observed unsafe condition', 'almost injury', 'escaped harm', 
+    'reporting gap', 'incident avoidance', 'hazard identified', 'preventive action taken', 'awareness of hazard', 
+    'luck', 'near miss report', 'accident avoided', 'preemptive action', 'detected issue', 'incident foresight', 'alertness'
+]
+
+20. Root Cause Analysis Keywords
+
+root_cause_analysis_keywords = [
+    'fishbone diagram', '5 whys', 'root cause', 'underlying issue', 'direct cause', 'indirect cause', 
+    'contributing factor', 'process failure', 'equipment failure', 'human factor', 'environmental factor', 
+    'design issue', 'preventive measure', 'corrective action', 'system error', 'procedure analysis', 
+    'hazard analysis', 'incident analysis', 'sequence of events', 'cause-effect relationship', 'problem identification', 
+    'incident investigation', 'error chain', 'risk assessment', 'system audit', 'incident debrief', 'preventative root cause', 
+    'behavioral root cause', 'safety investigation', 'process breakdown'
+]
+
+21. Emergency Equipment and Supplies Keywords
+
+emergency_equipment_keywords = [
+    'fire extinguisher', 'first aid kit', 'eyewash station', 'emergency shower', 'spill kit', 'defibrillator', 
+    'emergency exit', 'alarm system', 'fire blanket', 'escape ladder', 'oxygen mask', 'life jacket', 'AED', 
+    'fire hose', 'breathing apparatus', 'hazmat suit', 'emergency light', 'signage', 'stretcher', 'emergency phone', 
+    'fire alarm', 'safety cones', 'barricades', 'whistle', 'communication device', 'radio', 'respirator', 
+    'flashlight', 'emergency plan', 'rescue equipment'
+]
+
+22. Incident Report and Documentation Keywords
+
+incident_report_keywords = [
+    'incident report', 'investigation report', 'witness statement', 'accident log', 'root cause report', 
+    'injury log', 'safety observation', 'compliance report', 'corrective action report', 'audit', 
+    'inspection checklist', 'safety documentation', 'reporting form', 'emergency plan', 'training record', 
+    'policy manual', 'risk assessment form', 'employee file', 'evidence log', 'safety protocol', 'compliance log', 
+    'medical report', 'incident summary', 'reporting procedure', 'follow-up documentation', 'investigation notes', 
+    'incident tracker', 'review document', 'policy update'
+]
+
+
+---
+
+These lists further extend the capability of analyzing incident data, helping to identify various factors like personnel involved, location, compliance issues, and emergency response. Together, these lists provide a comprehensive set of
+
+Certainly! Here are additional lists with keywords related to safety incidents, workplace hazards, and incident investigation. Each list is designed to target different aspects of incident analysis, from causes and prevention measures to industry-specific keywords.
+
+
+---
+
+1. Incident Cause Keywords
+
+incident_cause_keywords = [
+    'human error', 'equipment failure', 'inadequate training', 'maintenance lapse', 'design flaw',
+    'overload', 'improper storage', 'substance misuse', 'fatigue', 'stress', 'lack of PPE', 'weather conditions',
+    'poor lighting', 'wet surfaces', 'corrosion', 'degradation', 'mechanical breakdown', 'miscommunication',
+    'unsafe act', 'hazardous material handling', 'improper disposal', 'overheating', 'ignition', 'contamination',
+    'flammable conditions', 'improper labeling', 'blocked exits', 'chemical reaction', 'improper ventilation',
+    'structural weakness', 'unintended exposure'
+]
+
+2. Preventive Action Keywords
+
+preventive_action_keywords = [
+    'safety training', 'routine maintenance', 'risk assessment', 'PPE use', 'emergency drills', 'standard operating procedures',
+    'inspection', 'compliance', 'hazard analysis', 'incident reporting', 'supervision', 'safety audit', 'behavior-based safety',
+    'lockout/tagout', 'ventilation improvement', 'spill containment', 'fire-resistant materials', 'equipment upgrade',
+    'alarm system', 'labeling', 'workplace ergonomics', 'safety signage', 'speed limit', 'restricted access', 'housekeeping',
+    'incident analysis', 'policy enforcement', 'security system', 'anti-slip surfaces', 'equipment isolation'
+]
+
+3. Injury Type Keywords
+
+injury_type_keywords = [
+    'burn', 'fracture', 'contusion', 'laceration', 'sprain', 'strain', 'amputation', 'shock', 'chemical burn',
+    'radiation sickness', 'poisoning', 'asphyxiation', 'eye injury', 'back injury', 'hand injury', 'head trauma',
+    'nerve damage', 'internal injury', 'abrasion', 'concussion', 'respiratory distress', 'puncture wound', 'crushing injury',
+    'hearing loss', 'heat exhaustion', 'heat stroke', 'frostbite', 'hypothermia'
+]
+
+4. Industrial Equipment Keywords
+
+industrial_equipment_keywords = [
+    'forklift', 'conveyor belt', 'crane', 'ladder', 'scaffolding', 'compressor', 'generator', 'boiler', 'pump',
+    'mixer', 'furnace', 'power tool', 'drill', 'saw', 'lathe', 'milling machine', 'welding machine', 'motor', 'valve',
+    'pipeline', 'pressure gauge', 'tank', 'reactor', 'hoist', 'hydraulic press', 'bulldozer', 'excavator', 'dump truck',
+    'safety harness', 'fire extinguisher', 'first aid kit'
+]
+
+5. Hazard Type Keywords
+
+hazard_type_keywords = [
+    'chemical', 'biohazard', 'electrical', 'mechanical', 'thermal', 'noise', 'radiation', 'dust', 'vapor',
+    'flammable', 'explosive', 'corrosive', 'toxic', 'asbestos', 'mercury', 'lead', 'pesticide', 'carbon monoxide',
+    'volatile', 'carcinogen', 'respiratory hazard', 'slip hazard', 'fall hazard', 'moving parts', 'hot surfaces',
+    'cold surfaces', 'sharp edges', 'confined space', 'high voltage', 'low visibility'
+]
+
+6. Incident Response Keywords
+
+incident_response_keywords = [
+    'evacuation', 'first aid', 'containment', 'rescue', 'emergency shutdown', 'isolation', 'cleanup', 'ventilation',
+    'decontamination', 'lockout', 'fire suppression', 'spillage containment', 'reporting', 'incident investigation',
+    'alarms', 'barricades', 'debriefing', 'post-incident review', 'follow-up inspection', 'medical attention',
+    'hazard removal', 'reinstatement', 'equipment inspection', 'environmental monitoring', 'communication'
+]
+
+7. Regulatory Compliance and Standards Keywords
+
+regulatory_compliance_keywords = [
+    'OSHA', 'EPA', 'safety standards', 'compliance', 'regulation', 'workplace safety', 'ISO standards', 'ANSI',
+    'inspection', 'audit', 'reporting', 'non-compliance', 'safety protocol', 'legal requirements', 'hazard analysis',
+    'penalty', 'certification', 'workplace hazard', 'code of practice', 'policy', 'insurance', 'risk management',
+    'injury record', 'health and safety', 'compliance checklist', 'safety culture', 'incident report', 'regulatory framework'
+]
+
+8. Workplace Condition Keywords
+
+workplace_condition_keywords = [
+    'low light', 'wet floor', 'uneven surface', 'poor ventilation', 'high noise', 'excessive heat', 'cold', 'humidity',
+    'slippery', 'cluttered', 'restricted access', 'isolated area', 'crowded space', 'moving machinery', 'dusty',
+    'poor visibility', 'vibrations', 'manual lifting', 'repetitive motion', 'overhead hazard', 'confined area',
+    'outdoor work', 'indoor work', 'exposure to elements', 'weather conditions', 'ergonomic issues'
+]
+
+9. Chemical and Hazardous Material Keywords
+
+chemical_keywords = [
+    'solvent', 'acid', 'alkali', 'chlorine', 'ammonia', 'formaldehyde', 'benzene', 'cyanide', 'hydrofluoric acid',
+    'nitric acid', 'sulfuric acid', 'acetone', 'carbon monoxide', 'methane', 'propane', 'pesticide', 'herbicide',
+    'bleach', 'petroleum', 'diesel', 'lubricant', 'paint', 'hydrogen sulfide', 'toxic gas', 'flammable liquid', 
+    'oxidizer', 'phosphate', 'hydrocarbon'
+]
+
+10. Incident Outcome Keywords
+
+incident_outcome_keywords = [
+    'property damage', 'injury', 'fatality', 'environmental impact', 'equipment damage', 'product loss',
+    'operational delay', 'legal consequences', 'penalty', 'lawsuit', 'investigation', 'shutdown', 'medical expenses',
+    'repair costs', 'compensation', 'insurance claim', 'reputation damage', 'regulatory fine', 'business interruption',
+    'production downtime', 'workplace morale', 'personnel turnover', 'corrective action', 'training requirement'
+]
+
+
+---
+
+These lists can be utilized to capture relevant keywords for a comprehensive analysis of incident data. They help in identifying various aspects, from causes and preventive actions to regulatory compliance and incident outcomes. You can further refine and customize these lists based on your specific requirements or industry focus.
+
