@@ -1,0 +1,118 @@
+from transformers import DistilBertTokenizer, DistilBertForSequenceClassification, Trainer, TrainingArguments
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, precision_recall_fscore_support
+import torch
+from torch.utils.data import DataLoader
+import numpy as np
+
+# Sample data (replace with your dataset)
+texts = [
+    "The stock market crashed today due to inflation.",
+    "A new AI model was released.",
+    "The weather is sunny and ideal for outdoor activities.",
+    "Quantum computing is advancing.",
+    "Inflation affects the economy."
+]
+labels = [0, 1, 2, 0, 1]  # Example labels for multiple classes
+
+# Determine the number of unique classes dynamically
+num_classes = len(set(labels))
+
+# Split data into training and testing sets
+train_texts, test_texts, train_labels, test_labels = train_test_split(texts, labels, test_size=0.2, random_state=42)
+
+# Load tokenizer and model dynamically for the number of classes
+tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased')
+model = DistilBertForSequenceClassification.from_pretrained('distilbert-base-uncased', num_labels=num_classes)
+
+# Check if a GPU is available and move the model to GPU if possible
+device = "cuda" if torch.cuda.is_available() else "cpu"
+model.to(device)
+
+# Tokenize the dataset with reduced sequence length and padding
+train_encodings = tokenizer(train_texts, truncation=True, padding=True, max_length=128, return_tensors="pt")
+test_encodings = tokenizer(test_texts, truncation=True, padding=True, max_length=128, return_tensors="pt")
+
+# Convert labels to tensors
+train_labels = torch.tensor(train_labels)
+test_labels = torch.tensor(test_labels)
+
+# Custom Dataset class for compatibility with Hugging Face Trainer
+class TextClassificationDataset(torch.utils.data.Dataset):
+    def __init__(self, encodings, labels):
+        self.encodings = encodings
+        self.labels = labels
+    
+    def __getitem__(self, idx):
+        item = {key: val[idx] for key, val in self.encodings.items()}
+        item['labels'] = self.labels[idx]
+        return item
+    
+    def __len__(self):
+        return len(self.labels)
+
+# Create train and test datasets
+train_dataset = TextClassificationDataset(train_encodings, train_labels)
+test_dataset = TextClassificationDataset(test_encodings, test_labels)
+
+# Create DataLoader for train and test datasets
+train_loader = DataLoader(train_dataset, batch_size=4, shuffle=True)
+test_loader = DataLoader(test_dataset, batch_size=4)
+
+# Define a compute_metrics function to calculate accuracy and other metrics
+def compute_metrics(pred):
+    labels = pred.label_ids
+    preds = np.argmax(pred.predictions, axis=1)
+    acc = accuracy_score(labels, preds)
+    precision, recall, f1, _ = precision_recall_fscore_support(labels, preds, average='weighted')
+    return {
+        'accuracy': acc,
+        'precision': precision,
+        'recall': recall,
+        'f1': f1
+    }
+
+# Training arguments with optimizations
+training_args = TrainingArguments(
+    output_dir='./results',
+    num_train_epochs=3,                # Reduced epochs for faster training
+    per_device_train_batch_size=4,     # Use a smaller batch size
+    per_device_eval_batch_size=4,
+    evaluation_strategy="steps",       # Evaluate more frequently
+    eval_steps=100,                    # Evaluate every 100 steps (adjust as needed)
+    logging_dir='./logs',
+    logging_steps=50,                  # Log every 50 steps
+    save_steps=100,                    # Save the model every 100 steps
+    save_strategy="steps",             # Save the model periodically
+    fp16=True,                          # Enable mixed precision if GPU supports it
+    gradient_accumulation_steps=2,      # Accumulate gradients over smaller steps
+    load_best_model_at_end=True,        # Load best model based on evaluation metric
+    metric_for_best_model="accuracy",  # Metric to evaluate best model
+    warmup_steps=500,                   # Number of warmup steps
+    weight_decay=0.01                   # Regularization to avoid overfitting
+)
+
+# Trainer
+trainer = Trainer(
+    model=model,
+    args=training_args,
+    train_dataset=train_dataset,
+    eval_dataset=test_dataset,
+    compute_metrics=compute_metrics,
+    data_collator=None  # You can set this to None or use your custom collator (if needed)
+)
+
+# Train the model
+trainer.train()
+
+# Evaluate the model on the test set
+eval_results = trainer.evaluate()
+
+# Print evaluation results
+print("Evaluation Results:", eval_results)
+
+# Save the trained model after training
+trainer.save_model('./final_model')
+
+# Optionally, save the tokenizer as well for inference later
+tokenizer.save_pretrained('./final_model')
