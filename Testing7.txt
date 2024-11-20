@@ -1,3 +1,17 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
@@ -32,9 +46,9 @@ df = pd.DataFrame(data)
 ids = df["id"]
 target = df["sentiment"]
 
-# Define features and target
+# Define features and binary target (positive=1, not positive=0)
 features = df.drop(columns=["id", "sentiment"])
-labels = target.map({"negative": 0, "neutral": 1, "positive": 2})  # Encode target classes
+labels = target.map({"positive": 1, "neutral": 0, "negative": 0})  # Binary classification
 
 # Split the data into train and test sets
 X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=0.2, random_state=42, stratify=labels)
@@ -48,8 +62,8 @@ text_column = "feedback"
 # 1. Standard scaling for numerical columns
 numerical_transformer = StandardScaler()
 
-# 2. One-hot encoding for categorical columns
-categorical_transformer = OneHotEncoder(sparse=False)
+# 2. One-hot encoding for categorical columns with handle_unknown='ignore'
+categorical_transformer = OneHotEncoder(sparse=False, handle_unknown="ignore")
 
 # 3. TF-IDF vectorization for textual data
 text_transformer = TfidfVectorizer(max_features=10)  # Limit features for simplicity
@@ -87,7 +101,7 @@ print(f"Test Accuracy: {test_accuracy:.4f}")
 
 # Print classification report
 print("\nClassification Report (Test Data):")
-print(classification_report(y_test, test_preds, target_names=["negative", "neutral", "positive"]))
+print(classification_report(y_test, test_preds, target_names=["not positive", "positive"]))
 
 # Combine processed features with predictions for the test set (optional)
 X_test_processed = pd.DataFrame(
