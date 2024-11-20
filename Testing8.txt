@@ -95,11 +95,17 @@ print("\nClassification Report (Test Data):")
 print(classification_report(y_test, test_preds, target_names=["not positive", "positive"]))
 
 # Combine processed features with predictions for the test set (optional)
+# Dynamically generate column names for processed data
+num_features = numerical_columns
+text_features = preprocessor.named_transformers_["text"].get_feature_names_out()
+categorical_features = categorical_columns
+
+processed_columns = list(num_features) + list(text_features) + list(categorical_features)
+
 X_test_processed = pd.DataFrame(
     model.named_steps["preprocessor"].transform(X_test),
-    columns=numerical_columns
-    + list(preprocessor.named_transformers_["text"].get_feature_names_out())
-    + ["gender_frequency", "city_frequency"],  # Frequency-encoded categorical columns
+    columns=processed_columns,
+    index=X_test.index,
 )
 X_test_processed["id"] = X_test.index.values
 X_test_processed["true_sentiment"] = y_test.values
