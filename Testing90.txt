@@ -1,0 +1,149 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import classification_report, accuracy_score
+from imblearn.combine import SMOTEENN  # Combine SMOTE and Edited Nearest Neighbors
+from imblearn.pipeline import Pipeline as ImbPipeline
+import statsmodels.api as sm
+
+# Sample dataset
+data = {
+    "id": [1, 2, 3, 4, 5, 6, 7],
+    "age": [25, 34, 45, 23, 35, 40, 29],  # Numerical column
+    "income": [50000, 60000, 80000, 45000, 70000, 75000, 52000],  # Numerical column
+    "gender": ["Male", "Female", "Male", "Female", "Male", "Female", "Male"],  # Categorical column
+    "city": ["New York", "Los Angeles", "Chicago", "Houston", "Phoenix", "Chicago", "Houston"],  # Categorical column
+    "feedback": [  # Textual column
+        "Great product, will buy again.",
+        "Had issues with delivery, but customer service was helpful.",
+        "Satisfied with the quality.",
+        "Product arrived late and damaged.",
+        "Exceptional service and fast delivery.",
+        "Terrible experience, will not recommend.",
+        "Fast delivery but average quality."
+    ],
+    "sentiment": ["positive", "neutral", "positive", None, "positive", "negative", "neutral"],  # Target column with NaN
+}
+
+df = pd.DataFrame(data)
+
+# Drop rows with missing target values (NaN)
+df = df.dropna(subset=["sentiment"])
+
+# Separate the unique ID and target column
+ids = df["id"]
+target = df["sentiment"]
+
+# Define features and binary target (positive=1, not positive=0)
+features = df.drop(columns=["id", "sentiment"])
+labels = target.map({"positive": 1, "neutral": 0, "negative": 0})  # Binary classification
+
+# Split the data into train and test sets
+X_train, X_test, y_train, y_test = train_test_split(features, labels, test_size=0.2, random_state=42, stratify=labels)
+
+# Define column types
+numerical_columns = ["age", "income"]
+categorical_columns = ["gender", "city"]
+text_column = "feedback"
+
+# Preprocessing steps
+# 1. Standard scaling for numerical columns
+numerical_transformer = StandardScaler()
+
+# 2. One-hot encoding for categorical columns
+categorical_transformer = OneHotEncoder(sparse_output=False, handle_unknown="ignore")
+
+# 3. TF-IDF vectorization for textual data
+text_transformer = TfidfVectorizer(max_features=10)  # Limit features for simplicity
+
+# Combine all preprocessing steps into a column transformer
+preprocessor = ColumnTransformer(
+    transformers=[
+        ("num", numerical_transformer, numerical_columns),
+        ("cat", categorical_transformer, categorical_columns),
+        ("text", text_transformer, text_column),
+    ]
+)
+
+# Classification pipeline with combined sampling techniques (SMOTE + ENN)
+model = ImbPipeline(
+    steps=[
+        ("preprocessor", preprocessor),
+        ("sampler", SMOTEENN(random_state=42)),  # Combine SMOTE (oversampling) and ENN (undersampling)
+        ("classifier", LogisticRegression(random_state=42, max_iter=1000)),  # Logistic Regression Classifier
+    ]
+)
+
+# Train the model
+model.fit(X_train, y_train)
+
+# Evaluate accuracy on the train and test set
+train_preds = model.predict(X_train)
+test_preds = model.predict(X_test)
+
+train_accuracy = accuracy_score(y_train, train_preds)
+test_accuracy = accuracy_score(y_test, test_preds)
+
+print(f"Train Accuracy: {train_accuracy:.4f}")
+print(f"Test Accuracy: {test_accuracy:.4f}")
+
+# Print classification report
+print("\nClassification Report (Test Data):")
+print(classification_report(y_test, test_preds, target_names=["not positive", "positive"]))
+
+# Extract preprocessed training data
+X_train_processed = model.named_steps["preprocessor"].transform(X_train)
+
+# Generate feature names dynamically
+categorical_feature_names = model.named_steps["preprocessor"].named_transformers_["cat"].get_feature_names_out(categorical_columns)
+text_feature_names = model.named_steps["preprocessor"].named_transformers_["text"].get_feature_names_out()
+feature_names = numerical_columns + list(categorical_feature_names) + list(text_feature_names)
+
+# Add intercept term for statsmodels
+X_train_processed = sm.add_constant(X_train_processed)
+
+# Fit logistic regression model using statsmodels for p-values
+sm_model = sm.Logit(y_train, X_train_processed)
+result = sm_model.fit()
+
+# Print p-values
+p_values = pd.DataFrame({
+    "Feature": ["Intercept"] + feature_names,
+    "P-Value": result.pvalues
+}).sort_values(by="P-Value")
+
+print("\nP-Values for Features:")
+print(p_values)
+
+# Plot p-values
+plt.figure(figsize=(10, 6))
+plt.barh(p_values["Feature"], p_values["P-Value"], color="skyblue")
+plt.axvline(0.05, color="red", linestyle="--", label="Significance Threshold (0.05)")
+plt.xlabel("P-Value")
+plt.ylabel("Feature")
+plt.title("P-Values for Features")
+plt.legend()
+plt.gca().invert_yaxis()  # Reverse the order for better readability
+plt.show()
+
+# Combine processed features with predictions for the test set (optional)
+processed_columns = ["Intercept"] + feature_names
+X_test_processed = model.named_steps["preprocessor"].transform(X_test)
+X_test_processed = sm.add_constant(X_test_processed)
+
+X_test_results = pd.DataFrame(
+    X_test_processed,
+    columns=processed_columns,
+    index=X_test.index,
+)
+X_test_results["id"] = X_test.index.values
+X_test_results["true_sentiment"] = y_test.values
+X_test_results["predicted_sentiment"] = test_preds
+
+print("\nProcessed Features with Predictions:")
+print(X_test_results.head())
