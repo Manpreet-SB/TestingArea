@@ -1,0 +1,63 @@
+WITH JobHistoryRanked AS (
+    SELECT 
+        jh.employee_id,
+        j.job_title,
+        ROW_NUMBER() OVER (PARTITION BY jh.employee_id ORDER BY jh.start_date ASC) AS job_rank,
+        ROW_NUMBER() OVER (PARTITION BY jh.employee_id ORDER BY jh.start_date DESC) AS reverse_rank
+    FROM 
+        JOB_HISTORY jh
+    JOIN 
+        JOBS j ON jh.job_id = j.job_id
+)
+SELECT 
+    e.employee_id,
+    e.first_name,
+    e.last_name,
+    (SELECT job_title FROM JobHistoryRanked WHERE employee_id = e.employee_id AND job_rank = 1) AS first_job,
+    (SELECT job_title FROM JobHistoryRanked WHERE employee_id = e.employee_id AND reverse_rank = 1) AS promoted_to
+FROM 
+    EMPLOYEES e;
+
+
+
+
+
+WITH FirstJob AS (
+    SELECT 
+        jh.employee_id,
+        j.min_salary AS first_job_sal,
+        ROW_NUMBER() OVER (PARTITION BY jh.employee_id ORDER BY jh.start_date ASC) AS job_rank
+    FROM 
+        JOB_HISTORY jh
+    JOIN 
+        JOBS j ON jh.job_id = j.job_id
+)
+SELECT 
+    e.first_name,
+    e.last_name,
+    fj.first_job_sal
+FROM 
+    EMPLOYEES e
+JOIN 
+    FirstJob fj ON e.employee_id = fj.employee_id
+WHERE 
+    fj.job_rank = 1
+ORDER BY 
+    e.first_name ASC;
+
+
+
+
+
+SELECT 
+    e.employee_id,
+    e.first_name,
+    e.last_name
+FROM 
+    EMPLOYEES e
+JOIN 
+    EMPLOYEES m ON e.manager_id = m.employee_id
+WHERE 
+    e.hire_date < m.hire_date
+ORDER BY 
+    e.employee_id ASC;
