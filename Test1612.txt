@@ -1,5 +1,70 @@
 from sklearn.inspection import permutation_importance
 
+# Extract transformed feature names from ColumnTransformer
+preprocessor = model.named_steps["preprocessor"]
+
+# Numerical features
+num_features = numerical_columns
+
+# Text features (e.g., TF-IDF vectorizer output)
+text_features = preprocessor.named_transformers_["text"].get_feature_names_out()
+
+# Categorical features
+cat_transformer = preprocessor.named_transformers_["cat"]
+if hasattr(cat_transformer, "get_feature_names_out"):  # Handle one-hot encoding
+    cat_features = cat_transformer.get_feature_names_out(categorical_columns)
+else:
+    cat_features = categorical_columns  # If no transformation occurred
+
+# Combine all processed feature names
+processed_feature_names = list(num_features) + list(text_features) + list(cat_features)
+
+# Ensure the number of feature names matches the transformed dataset
+assert len(processed_feature_names) == X_test.shape[1], f"Mismatch: {len(processed_feature_names)} features vs {X_test.shape[1]} in processed data."
+
+# Perform permutation importance on the trained model
+result = permutation_importance(
+    model, X_test, y_test, scoring='accuracy', n_repeats=10, random_state=42
+)
+
+# Combine feature names with their importance values
+permutation_importances = pd.DataFrame({
+    "Feature": processed_feature_names,
+    "Importance": result.importances_mean,
+    "Std_Dev": result.importances_std  # Standard deviation for importance values
+}).sort_values(by="Importance", ascending=False)
+
+# Display permutation importance
+print("\nPermutation Feature Importance:")
+print(permutation_importances)
+
+# Plot permutation importance
+plt.figure(figsize=(10, 6))
+plt.barh(permutation_importances["Feature"], permutation_importances["Importance"], color="green", xerr=permutation_importances["Std_Dev"])
+plt.xlabel("Permutation Importance (Mean)")
+plt.ylabel("Feature")
+plt.title("Permutation Feature Importance")
+plt.gca().invert_yaxis()  # Reverse the order for better readability
+plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+from sklearn.inspection import permutation_importance
+
 # Perform permutation importance on the trained model
 result = permutation_importance(
     model, X_test, y_test, scoring='accuracy', n_repeats=10, random_state=42
