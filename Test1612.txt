@@ -72,3 +72,45 @@ plt.ylabel("Feature")
 plt.title("Feature Importance by Random Forest Classifier (Normalized)")
 plt.gca().invert_yaxis()  # Reverse the order for better readability
 plt.show()
+
+
+
++++++++++++
+
+from sklearn.inspection import permutation_importance
+
+# Extract feature names from the preprocessing pipeline
+num_features = numerical_columns
+text_features = model.named_steps["preprocessor"].named_transformers_["text"].get_feature_names_out()
+cat_features = categorical_columns
+
+# Combine all feature names
+processed_feature_names = list(num_features) + list(text_features) + list(cat_features)
+
+# Ensure the number of feature names matches the transformed dataset
+assert len(processed_feature_names) == X_test.shape[1], "Feature name mismatch with processed data!"
+
+# Perform permutation importance on the trained model
+result = permutation_importance(
+    model, X_test, y_test, scoring='accuracy', n_repeats=10, random_state=42
+)
+
+# Combine feature names with their importance values
+permutation_importances = pd.DataFrame({
+    "Feature": processed_feature_names,
+    "Importance": result.importances_mean,
+    "Std_Dev": result.importances_std  # Standard deviation for importance values
+}).sort_values(by="Importance", ascending=False)
+
+# Display permutation importance
+print("\nPermutation Feature Importance:")
+print(permutation_importances)
+
+# Plot permutation importance
+plt.figure(figsize=(10, 6))
+plt.barh(permutation_importances["Feature"], permutation_importances["Importance"], color="green", xerr=permutation_importances["Std_Dev"])
+plt.xlabel("Permutation Importance (Mean)")
+plt.ylabel("Feature")
+plt.title("Permutation Feature Importance")
+plt.gca().invert_yaxis()  # Reverse the order for better readability
+plt.show()
